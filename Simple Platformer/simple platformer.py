@@ -1,102 +1,146 @@
 import pygame
 from sys import exit
+from random import randint, choice
 
-# The Player Class
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        player_walk1 = pygame.image.load("png/Sprite/Walk (1).png").convert_alpha()
-        player_walk2 = pygame.image.load("png/Sprite/Walk (2).png").convert_alpha()
-        self.player_walk = [player_walk1,player_walk2]
-        self.player_index = 0
-        self.player_stand = pygame.image.load("png/Sprite/Idle (1).png").convert_alpha()
-        self.player_jump = pygame.image.load("png/Sprite/Jump (4).png")
 
-        self.image = self.player_walk[self.player_index]
-        self.image_scaled = pygame.transform.scale(self.image, (25,25))
-        self.rect = self.image_scaled.get_rect(midbottom = (80 , 300))
-        self.gravity = 0 
+        # CHANGES
+        # resized display screen and background to be compatible with my monitor
+
+        # resized and updated the player surface variable. resize to (100, 158), or something else if you find something better
+        # if you wanna use new sprites, you have to resize them in paint 3d tool.
+        # go to canvas, go to crop, and crop out the blank spaces.
+        # you can see the pixel width and height on the right. try to set it as close to 350, 550 as possible to keep things similar
+        
+        # added idle animation
+        # added left and right movement
+        # inverted sprites to make left movement look more natural. (added an "l" at the end for left invert)
+
+        # PROBLEMS
+        # When character jumps, it uses walking animation instead of jumping one. applies to both left and right
+        # Idle animation is fixed to look right. even after you move left, as soon as you let go of left arrow, character will look right.
+
+        # Idle 2 & 13 
+        player_idle_2 = pygame.image.load('png/Sprite/Idle (2).png').convert_alpha()
+        player_idle_2 = pygame.transform.scale(player_idle_2, (100,158))
+        player_idle_2l = pygame.image.load('png/Sprite/Idle (2)l.png').convert_alpha()
+        player_idle_2l = pygame.transform.scale(player_idle_2l, (100,158))
+
+        player_idle_13 = pygame.image.load('png/Sprite/Idle (13).png').convert_alpha()
+        player_idle_13 = pygame.transform.scale(player_idle_13, (100,158))
+        player_idle_13l = pygame.image.load('png/Sprite/Idle (13)l.png').convert_alpha()
+        player_idle_13l = pygame.transform.scale(player_idle_13l, (100,158))
+
+        # animation index
+        self.player_idle = [player_idle_2, player_idle_13]
+        self.player_idle_index = 0
+        self.player_idlel = [player_idle_2l, player_idle_13l]
+        self.player_idle_indexl = 0
+
+        # player walk
+        player_walk_1 = pygame.image.load('png/Sprite/Walk (1).png').convert_alpha()
+        player_walk_1 = pygame.transform.scale(player_walk_1, (100,158))
+        player_walk_1l = pygame.image.load('png/Sprite/Walk (1)l.png').convert_alpha()
+        player_walk_1l = pygame.transform.scale(player_walk_1l, (100,158))
+
+        player_walk_4 = pygame.image.load('png/Sprite/Walk (4).png').convert_alpha()
+        player_walk_4 = pygame.transform.scale(player_walk_4, (100,158))
+        player_walk_4l = pygame.image.load('png/Sprite/Walk (4)l.png').convert_alpha()
+        player_walk_4l = pygame.transform.scale(player_walk_4l, (100,158))
+
+        # player walk index
+        self.player_walk = [player_walk_1, player_walk_4]
+        self.player_walk_index = 0
+        self.player_walkl = [player_walk_1l, player_walk_4l]
+        self.player_walk_indexl = 0
+
+        # resized player jump
+        self.player_jump = pygame.image.load("png/Sprite/Jump (4).png").convert_alpha()
+        self.player_jump = pygame.transform.scale(self.player_jump, (100,158))
+        self.player_jumpl = pygame.image.load("png/Sprite/Jump (4)l.png").convert_alpha()
+        self.player_jumpl = pygame.transform.scale(self.player_jumpl, (100,158))
+
+        self.image = self.player_idle[self.player_idle_index]
+        self.image = pygame.image.load('png/Sprite/Idle (2).png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (100,158))
+        self.rect = self.image.get_rect(midbottom = (120,800))
+        self.gravity = 0
 
     def player_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
+        if keys[pygame.K_SPACE] and self.rect.bottom >= 800:
             self.gravity = -20
             # self.jump_sound.play()
 
+            # left and right arrow to move left and right
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += 4
+            self.player_walk_index += 0.1
+            if self.player_walk_index >= len(self.player_walk): self.player_walk_index = 0
+            self.image = self.player_walk[int(self.player_walk_index)]
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= 4
+            self.player_walk_indexl += 0.1
+            if self.player_walk_indexl >= len(self.player_walkl): self.player_walk_indexl = 0
+            self.image = self.player_walkl[int(self.player_walk_indexl)]
+
+            # updated ground to 800
     def apply_gravity(self):
         self.gravity += 1
         self.rect.y += self.gravity
-        if self.rect.bottom >= 300:
-            self.rect.bottom = 300
+        if self.rect.bottom >= 800:
+            self.rect.bottom = 800
 
     def animation_state(self):
-        if self.rect.bottom < 300:
+        if self.rect.bottom < 800:
             self.image = self.player_jump
         else:
-            self.image = self.player_stand
-            # self.player_index += 0.1
-            # if self.player_index >= len(self.player_walk):
-            #     self.player_index = 0
-            # self.image = self.player_walk[int(self.player_index)]
-
-    def player_size(self):
-        
-        player_resized = pygame.transform.scale(self.image, (50, 100))
-        player_stand_rectangle = player_stand.get_rect(center = (400,200))
-
-
+            self.player_idle_index += 0.1
+            if self.player_idle_index >= len(self.player_idle): self.player_idle_index = 0
+            self.image = self.player_idle[int(self.player_idle_index)]
 
     def update(self):
-        self.player_input()
-        self.apply_gravity()
         self.animation_state()
-
-
-
-
-# player sprite (single group)
-# enemy sprite (single group)
-# coin (single group)
-# platforms 
-# audio(bgm, collision sound, etc)
-# ending/starting screen
-# 
+        self.apply_gravity()
+        self.player_input()
 
 
 pygame.init()
-# screen
-screen = pygame.display.set_mode((1920, 1229))
-pygame.display.set_caption('Santa Jump')
 
-# background and ground surface
+screen = pygame.display.set_mode((1406,900))
+pygame.display.set_caption('Santa Jump')
+clock = pygame.time.Clock()
+game_active = True
+
 background_surf = pygame.image.load('png/Background/background_surface.png').convert_alpha()
 ground_surf = pygame.image.load('png/Background/ground_surface.png').convert_alpha()
-
-game_active = True
 
 player = pygame.sprite.GroupSingle()
 player.add(Player())
 
-# while game is running
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
 
-    
-
     if game_active:
-        screen.blit(background_surf, (0,0))
-        screen.blit(ground_surf, (0,1000))
-        screen.blit(ground_surf, (300,1000))
-        screen.blit(ground_surf, (600,1000))
-        screen.blit(ground_surf, (900,1000))
-        screen.blit(ground_surf, (1200,1000))
-        screen.blit(ground_surf, (1500,1000))
-        screen.blit(ground_surf, (1800,1000))
+            screen.blit(background_surf, (0,0))
+            screen.blit(ground_surf, (0,700))
+            screen.blit(ground_surf, (300,700))
+            screen.blit(ground_surf, (600,700))
+            screen.blit(ground_surf, (900,700))
+            screen.blit(ground_surf, (1200,700))
+            screen.blit(ground_surf, (1500,700))
+            screen.blit(ground_surf, (1800,700))
 
-        player.draw(screen)
-        player.update()
+            player.draw(screen)
+            player.update()
+
+    mouse_pos = pygame.mouse.get_pos()
+    print(mouse_pos)
 
     pygame.display.update()
+    clock.tick(60)
