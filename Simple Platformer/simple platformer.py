@@ -52,10 +52,12 @@ class Player(pygame.sprite.Sprite):
         self.animation_state()
 
 
+
+
 # player sprite (single group)
 # enemy sprite (single group)
 # coin (single group)
-# platforms (single group)
+# platforms 
 # audio(bgm, collision sound, etc)
 # ending/starting screen
 # 
@@ -63,7 +65,7 @@ class Player(pygame.sprite.Sprite):
 
 pygame.init()
 # screen
-screen = pygame.display.set_mode((1900, 1200))
+screen = pygame.display.set_mode((1920, 1229))
 pygame.display.set_caption('Santa Jump')
 
 # background and ground surface
@@ -86,8 +88,14 @@ while True:
 
     if game_active:
         screen.blit(background_surf, (0,0))
-        screen.blit(ground_surf, (0,0))
-        
+        screen.blit(ground_surf, (0,1000))
+        screen.blit(ground_surf, (300,1000))
+        screen.blit(ground_surf, (600,1000))
+        screen.blit(ground_surf, (900,1000))
+        screen.blit(ground_surf, (1200,1000))
+        screen.blit(ground_surf, (1500,1000))
+        screen.blit(ground_surf, (1800,1000))
+
         player.draw(screen)
         player.update()
 
