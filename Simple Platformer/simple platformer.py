@@ -62,8 +62,8 @@ class Player(pygame.sprite.Sprite):
         self.player_jumpl = pygame.image.load("png/Sprite/Jump (4)l.png").convert_alpha()
         self.player_jumpl = pygame.transform.scale(self.player_jumpl, (100,158))
 
-        self.image = self.player_idle[self.player_idle_index]
-        self.image = pygame.image.load('png/Sprite/Idle (2).png').convert_alpha()
+        self.image = self.player_idle[self.player_idle_index] or self.player_idlel[self.player_idle_indexl]
+        self.image = pygame.image.load('png/Sprite/Idle (2).png').convert_alpha() or pygame.image.load('png/Sprite/Idle (2)l.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (100,158))
         self.rect = self.image.get_rect(midbottom = (120,800))
         self.gravity = 0
