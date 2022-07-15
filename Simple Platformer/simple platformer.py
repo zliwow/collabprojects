@@ -1,3 +1,4 @@
+from platform import platform
 import pygame
 from sys import exit
 from random import randint, choice
@@ -106,6 +107,20 @@ class Player(pygame.sprite.Sprite):
         self.apply_gravity()
         self.player_input()
 
+class Platform(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+    
+        self.image = pygame.image.load("png/Background/ground_surface.png").convert_alpha()
+        # rect size unsure
+        self.rect = self.image.get_rect(midbottom = (120,800))
+
+
+
+
+
+
+        
 
 pygame.init()
 
@@ -120,6 +135,9 @@ ground_surf = pygame.image.load('png/Background/ground_surface.png').convert_alp
 player = pygame.sprite.GroupSingle()
 player.add(Player())
 
+ice_platform = pygame.sprite.GroupSingle()
+ice_platform.add(Platform())
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -128,16 +146,20 @@ while True:
 
     if game_active:
             screen.blit(background_surf, (0,0))
-            screen.blit(ground_surf, (0,700))
-            screen.blit(ground_surf, (300,700))
-            screen.blit(ground_surf, (600,700))
-            screen.blit(ground_surf, (900,700))
-            screen.blit(ground_surf, (1200,700))
-            screen.blit(ground_surf, (1500,700))
-            screen.blit(ground_surf, (1800,700))
+            # screen.blit(ground_surf, (0,700))
+            # screen.blit(ground_surf, (300,700))
+            # screen.blit(ground_surf, (600,700))
+            # screen.blit(ground_surf, (900,700))
+            # screen.blit(ground_surf, (1200,700))
+            # screen.blit(ground_surf, (1500,700))
+            # screen.blit(ground_surf, (1800,700))
 
             player.draw(screen)
             player.update()
+            ice_platform.draw(screen)
+            
+
+
 
     mouse_pos = pygame.mouse.get_pos()
     print(mouse_pos)
