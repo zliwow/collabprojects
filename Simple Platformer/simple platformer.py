@@ -117,6 +117,36 @@ class Platform(pygame.sprite.Sprite):
 
 
 
+class Goldcoin(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        goldcoin_1 = pygame.image.load("png/GoldCoinSprite/Coin1.png")
+        goldcoin_2 = pygame.image.load("png/GoldCoinSprite/Coin2.png")
+        goldcoin_3 = pygame.image.load("png/GoldCoinSprite/Coin3.png")
+        goldcoin_4 = pygame.image.load("png/GoldCoinSprite/Coin4.png")
+        goldcoin_5 = pygame.image.load("png/GoldCoinSprite/Coin5.png")
+        goldcoin_6 = pygame.image.load("png/GoldCoinSprite/Coin6.png")
+
+        self.coin_spin = [goldcoin_1, goldcoin_2, goldcoin_3, goldcoin_4, goldcoin_5, goldcoin_6]
+        self.image = goldcoin_1
+        self.rect = self.image.get_rect(midbottom = (1200,800))
+        self.coin_spin_index = 0
+
+
+    def coin_animation(self):
+        self.coin_spin_index += 0.1
+        if self.coin_spin_index >= len(self.coin_spin): self.coin_spin_index = 0
+        self.image = self.coin_spin[int(self.coin_spin_index)]
+
+
+    def update(self):
+        self.coin_animation
+
+
+
+
+
 
 
 
@@ -138,6 +168,9 @@ player.add(Player())
 ice_platform = pygame.sprite.GroupSingle()
 ice_platform.add(Platform())
 
+coin = pygame.sprite.GroupSingle()
+coin.add(Goldcoin())
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -157,6 +190,8 @@ while True:
             player.draw(screen)
             player.update()
             ice_platform.draw(screen)
+            coin.draw(screen)
+
             
 
 
