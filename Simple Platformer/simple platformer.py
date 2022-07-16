@@ -24,14 +24,14 @@ class Player(pygame.sprite.Sprite):
         # Idle animation is fixed to look right. even after you move left, as soon as you let go of left arrow, character will look right.
 
         # Idle 2 & 13 
-        player_idle_2 = pygame.image.load('Simple Platformer/png/Sprite/Idle (2).png').convert_alpha()
+        player_idle_2 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2).png').convert_alpha()
         player_idle_2 = pygame.transform.scale(player_idle_2, (100,158))
-        player_idle_2l = pygame.image.load('Simple Platformer/png/Sprite/Idle (2)l.png').convert_alpha()
+        player_idle_2l = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2)l.png').convert_alpha()
         player_idle_2l = pygame.transform.scale(player_idle_2l, (100,158))
 
-        player_idle_13 = pygame.image.load('Simple Platformer/png/Sprite/Idle (13).png').convert_alpha()
+        player_idle_13 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (13).png').convert_alpha()
         player_idle_13 = pygame.transform.scale(player_idle_13, (100,158))
-        player_idle_13l = pygame.image.load('Simple Platformer/png/Sprite/Idle (13)l.png').convert_alpha()
+        player_idle_13l = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (13)l.png').convert_alpha()
         player_idle_13l = pygame.transform.scale(player_idle_13l, (100,158))
 
         # animation index
@@ -41,14 +41,14 @@ class Player(pygame.sprite.Sprite):
         self.player_idle_indexl = 0
 
         # player walk
-        player_walk_1 = pygame.image.load('Simple Platformer/png/Sprite/Walk (1).png').convert_alpha()
+        player_walk_1 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Walk (1).png').convert_alpha()
         player_walk_1 = pygame.transform.scale(player_walk_1, (100,158))
-        player_walk_1l = pygame.image.load('Simple Platformer/png/Sprite/Walk (1)l.png').convert_alpha()
+        player_walk_1l = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Walk (1)l.png').convert_alpha()
         player_walk_1l = pygame.transform.scale(player_walk_1l, (100,158))
 
-        player_walk_4 = pygame.image.load('Simple Platformer/png/Sprite/Walk (4).png').convert_alpha()
+        player_walk_4 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Walk (4).png').convert_alpha()
         player_walk_4 = pygame.transform.scale(player_walk_4, (100,158))
-        player_walk_4l = pygame.image.load('Simple Platformer/png/Sprite/Walk (4)l.png').convert_alpha()
+        player_walk_4l = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Walk (4)l.png').convert_alpha()
         player_walk_4l = pygame.transform.scale(player_walk_4l, (100,158))
 
         # player walk index
@@ -58,13 +58,13 @@ class Player(pygame.sprite.Sprite):
         self.player_walk_indexl = 0
 
         # resized player jump
-        self.player_jump = pygame.image.load("Simple Platformer/png/Sprite/Jump (4).png").convert_alpha()
+        self.player_jump = pygame.image.load("collabprojects/Simple Platformer/png/Sprite/Jump (4).png").convert_alpha()
         self.player_jump = pygame.transform.scale(self.player_jump, (100,158))
-        self.player_jumpl = pygame.image.load("Simple Platformer/png/Sprite/Jump (4)l.png").convert_alpha()
+        self.player_jumpl = pygame.image.load("collabprojects/Simple Platformer/png/Sprite/Jump (4)l.png").convert_alpha()
         self.player_jumpl = pygame.transform.scale(self.player_jumpl, (100,158))
 
         self.image = self.player_idle[self.player_idle_index] or self.player_idlel[self.player_idle_indexl]
-        self.image = pygame.image.load('Simple Platformer/png/Sprite/Idle (2).png').convert_alpha() or pygame.image.load('Simple Platformer/png/Sprite/Idle (2)l.png').convert_alpha()
+        self.image = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2).png').convert_alpha() or pygame.image.load('Simple Platformer/png/Sprite/Idle (2)l.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (100,158))
         self.rect = self.image.get_rect(midbottom = (120,800))
         self.gravity = 0
@@ -111,7 +111,7 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
     
-        self.image = pygame.image.load("Simple Platformer/png/Background/ground_surface.png").convert_alpha()
+        self.image = pygame.image.load("collabprojects/Simple Platformer/png/Background/ground_surface.png").convert_alpha()
         # rect size unsure
         self.rect = self.image.get_rect(midbottom = (120,800))
 
@@ -121,15 +121,15 @@ class Goldcoin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        goldcoin_1 = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin1.png").convert_alpha()
-        goldcoin_2 = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin2.png").convert_alpha()
-        goldcoin_3 = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin3.png").convert_alpha()
-        goldcoin_4 = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin4.png").convert_alpha()
-        goldcoin_5 = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin5.png").convert_alpha()
-        goldcoin_6 = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin6.png").convert_alpha()
+        goldcoin_1 = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin1.png").convert_alpha()
+        goldcoin_2 = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin2.png").convert_alpha()
+        goldcoin_3 = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin3.png").convert_alpha()
+        goldcoin_4 = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin4.png").convert_alpha()
+        goldcoin_5 = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin5.png").convert_alpha()
+        goldcoin_6 = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin6.png").convert_alpha()
 
         self.coin_spin = [goldcoin_1, goldcoin_2, goldcoin_3, goldcoin_4, goldcoin_5, goldcoin_6]
-        self.image = pygame.image.load("Simple Platformer/png/GoldCoinSprite/Coin1.png").convert_alpha()
+        self.image = pygame.image.load("collabprojects/Simple Platformer/png/GoldCoinSprite/Coin1.png").convert_alpha()
         self.rect = self.image.get_rect(midbottom = (1200,800))
         self.coin_spin_index = 0
 
@@ -159,8 +159,8 @@ pygame.display.set_caption('Santa Jump')
 clock = pygame.time.Clock()
 game_active = True
 
-background_surf = pygame.image.load('Simple Platformer/png/Background/background_surface.png').convert_alpha()
-ground_surf = pygame.image.load('Simple Platformer/png/Background/ground_surface.png').convert_alpha()
+background_surf = pygame.image.load('collabprojects/Simple Platformer/png/Background/background_surface.png').convert_alpha()
+ground_surf = pygame.image.load('collabprojects/Simple Platformer/png/Background/ground_surface.png').convert_alpha()
 
 player = pygame.sprite.GroupSingle()
 player.add(Player())
