@@ -8,20 +8,9 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # CHANGES
-        # resized display screen and background to be compatible with my monitor
-
-        # resized and updated the player surface variable. resize to (100, 158), or something else if you find something better
-        # if you wanna use new sprites, you have to resize them in paint 3d tool.
-        # go to canvas, go to crop, and crop out the blank spaces.
-        # you can see the pixel width and height on the right. try to set it as close to 350, 550 as possible to keep things similar
-        
-        # added idle animation
-        # added left and right movement
-        # inverted sprites to make left movement look more natural. (added an "l" at the end for left invert)
 
         # PROBLEMS
-        # When character jumps, it uses walking animation instead of jumping one. applies to both left and right
-        # Idle animation is fixed to look right. even after you move left, as soon as you let go of left arrow, character will look right.
+
 
         # Idle 2 & 13 
         player_idle_2 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2).png').convert_alpha()
@@ -87,7 +76,6 @@ class Player(pygame.sprite.Sprite):
             if self.player_walk_indexl >= len(self.player_walkl): self.player_walk_indexl = 0
             self.image = self.player_walkl[int(self.player_walk_indexl)]
 
-            # updated ground to 800
     def apply_gravity(self):
         self.gravity += 1
         self.rect.y += self.gravity
