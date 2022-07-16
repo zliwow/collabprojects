@@ -180,6 +180,14 @@ coin.add(Goldcoin())
 introplayer = pygame.sprite.GroupSingle()
 introplayer.add(IntroPlayer())
 
+# Sound buttons
+sound_on = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/volume.png').convert_alpha()
+sound_on = pygame.transform.scale(sound_on, (50,50))
+sound_on_rect = sound_on.get_rect(topleft = (25,25))
+sound_off = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/mute.png').convert_alpha()
+sound_off = pygame.transform.scale(sound_off, (50,50))
+sound_off_rect = sound_off.get_rect(topleft = (25,25))
+
 # Intro Screen
 intro_text = test_font.render('" Press Space to Start "', False, (100,115,150))
 intro_text_rect = intro_text.get_rect(center = (703,750))
@@ -194,7 +202,21 @@ pygame.time.set_timer(intro_animation, 1000)
 
 # Intro music
 intro_music = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/FadeIntoWhite.mp3')
-intro_music.set_volume(0.1)
+intro_music.set_volume(0.05)
+
+# Game music
+game_music1 = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/HappyFlight.mp3')
+game_music1.set_volume(0.05)
+# game_music2 = pygame.mixer.music.load('collabprojects/Simple Platformer/png/music/Snowscape.mp3')
+# game_music2.set_volume(0.1)
+# game_music3 = pygame.mixer.music.load('collabprojects/Simple Platformer/png/music/CrystalWaver.mp3')
+# game_music3.set_volume(0.1)
+
+def pause_track():
+    pygame.mixer.pause()
+
+def resume_track():
+    pygame.mixer.unpause()
 
 # Intro fade
 def fade(): 
@@ -211,7 +233,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        
+
         if game_active == False:
             intro_music.play(loops = -1)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -221,20 +243,20 @@ while True:
 
 
     if game_active:
-            screen.blit(background_surf, (0,0))
-            # screen.blit(ground_surf, (0,700))
-            # screen.blit(ground_surf, (300,700))
-            # screen.blit(ground_surf, (600,700))
-            # screen.blit(ground_surf, (900,700))
-            # screen.blit(ground_surf, (1200,700))
-            # screen.blit(ground_surf, (1500,700))
-            # screen.blit(ground_surf, (1800,700))
+        screen.blit(background_surf, (0,0))
+        # screen.blit(ground_surf, (0,700))
+        # screen.blit(ground_surf, (300,700))
+        # screen.blit(ground_surf, (600,700))
+        # screen.blit(ground_surf, (900,700))
+        # screen.blit(ground_surf, (1200,700))
+        # screen.blit(ground_surf, (1500,700))
+        # screen.blit(ground_surf, (1800,700))
 
-            player.draw(screen)
-            player.update()
-            ice_platform.draw(screen)
-            coin.draw(screen)
-            coin.update()
+        player.draw(screen)
+        player.update()
+        ice_platform.draw(screen)
+        coin.draw(screen)
+        coin.update()
 
     else:
         screen.fill((176,217,247))
@@ -243,8 +265,9 @@ while True:
         introplayer.draw(screen)
         introplayer.update()
         
-
-
+    # mouse_pos = pygame.mouse.get_pos()
+    # print(mouse_pos)
+    
 
     pygame.display.update()
     clock.tick(60)
