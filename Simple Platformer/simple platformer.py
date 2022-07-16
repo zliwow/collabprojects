@@ -165,6 +165,9 @@ game_active = False
 background_surf = pygame.image.load('collabprojects/Simple Platformer/png/Background/background_surface.png').convert_alpha()
 ground_surf = pygame.image.load('collabprojects/Simple Platformer/png/Background/ground_surface.png').convert_alpha()
 
+intro_music = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/FadeIntoWhite.mp3')
+
+# Groups
 player = pygame.sprite.GroupSingle()
 player.add(Player())
 
@@ -189,6 +192,10 @@ game_title_rect = game_title.get_rect(center = (703,100))
 intro_animation = pygame.USEREVENT + 1
 pygame.time.set_timer(intro_animation, 1000)
 
+# Intro music
+intro_music = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/FadeIntoWhite.mp3')
+intro_music.set_volume(0.1)
+
 # Intro fade
 def fade(): 
     fade = pygame.Surface((1406,900))
@@ -206,7 +213,9 @@ while True:
             exit()
         
         if game_active == False:
+            intro_music.play(loops = -1)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                pygame.mixer.fadeout(1000)
                 fade()
                 game_active = True
 
@@ -233,6 +242,7 @@ while True:
         screen.blit(game_title, game_title_rect)
         introplayer.draw(screen)
         introplayer.update()
+        
 
 
 
