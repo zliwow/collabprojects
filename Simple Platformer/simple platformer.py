@@ -11,7 +11,6 @@ class Player(pygame.sprite.Sprite):
 
         # PROBLEMS
 
-
         # Idle 2 & 13 
         player_idle_2 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2).png').convert_alpha()
         player_idle_2 = pygame.transform.scale(player_idle_2, (100,158))
@@ -103,8 +102,6 @@ class Platform(pygame.sprite.Sprite):
         # rect size unsure
         self.rect = self.image.get_rect(midbottom = (120,800))
 
-
-
 class Goldcoin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -131,33 +128,105 @@ class Goldcoin(pygame.sprite.Sprite):
     def update(self):
         self.coin_animation()
 
+class IntroPlayer(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        player_idle_2 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2).png').convert_alpha()
+        player_idle_2 = pygame.transform.scale(player_idle_2, (220,346))
+        player_idle_13 = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (13).png').convert_alpha()
+        player_idle_13 = pygame.transform.scale(player_idle_13, (220,346))
+
+        self.player_idle = [player_idle_2, player_idle_13]
+        self.player_idle_index = 0
+
+        self.image = self.player_idle[self.player_idle_index]
+        self.image = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Idle (2).png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (220,346 ))
+        self.rect = self.image.get_rect(midbottom = (703,630))
+
+    def animation_state(self):
+        self.player_idle_index += 0.1
+        if self.player_idle_index >= len(self.player_idle): self.player_idle_index = 0
+        self.image = self.player_idle[int(self.player_idle_index)]
 
 
-
-
-
-
-
-        
+    def update(self):
+        self.animation_state()
 
 pygame.init()
 
 screen = pygame.display.set_mode((1406,900))
 pygame.display.set_caption('Santa Jump')
 clock = pygame.time.Clock()
-game_active = True
+test_font = pygame.font.Font('collabprojects/Simple Platformer/png/font/Frostbite.ttf', 50)
+game_active = False
 
 background_surf = pygame.image.load('collabprojects/Simple Platformer/png/Background/background_surface.png').convert_alpha()
 ground_surf = pygame.image.load('collabprojects/Simple Platformer/png/Background/ground_surface.png').convert_alpha()
 
+intro_music = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/FadeIntoWhite.mp3')
+
+# Groups
 player = pygame.sprite.GroupSingle()
 player.add(Player())
 
-ice_platform = pygame.sprite.GroupSingle()
+ice_platform = pygame.sprite.GroupSingle() 
 ice_platform.add(Platform())
 
 coin = pygame.sprite.GroupSingle()
 coin.add(Goldcoin())
+
+introplayer = pygame.sprite.GroupSingle()
+introplayer.add(IntroPlayer())
+
+# Sound buttons
+sound_on = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/volume.png').convert_alpha()
+sound_on = pygame.transform.scale(sound_on, (50,50))
+sound_on_rect = sound_on.get_rect(topleft = (25,25))
+sound_off = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/mute.png').convert_alpha()
+sound_off = pygame.transform.scale(sound_off, (50,50))
+sound_off_rect = sound_off.get_rect(topleft = (25,25))
+
+# Intro Screen
+intro_text = test_font.render('" Press Space to Start "', False, (100,115,150))
+intro_text_rect = intro_text.get_rect(center = (703,750))
+
+game_title = test_font.render('Jump Santa', False, (0,50,130))
+game_title = pygame.transform.rotozoom(game_title, 0, 2)
+game_title_rect = game_title.get_rect(center = (703,100))
+
+# Intro walk animation
+intro_animation = pygame.USEREVENT + 1
+pygame.time.set_timer(intro_animation, 1000)
+
+# Intro music
+intro_music = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/FadeIntoWhite.mp3')
+intro_music.set_volume(0.05)
+
+# Game music
+game_music1 = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/HappyFlight.mp3')
+game_music1.set_volume(0.05)
+# game_music2 = pygame.mixer.music.load('collabprojects/Simple Platformer/png/music/Snowscape.mp3')
+# game_music2.set_volume(0.1)
+# game_music3 = pygame.mixer.music.load('collabprojects/Simple Platformer/png/music/CrystalWaver.mp3')
+# game_music3.set_volume(0.1)
+
+def pause_track():
+    pygame.mixer.pause()
+
+def resume_track():
+    pygame.mixer.unpause()
+
+# Intro fade
+def fade(): 
+    fade = pygame.Surface((1406,900))
+    fade.blit(background_surf, (0,0))
+    for alpha in range(0, 100):
+        fade.set_alpha(alpha)
+        screen.blit(fade, (0,0))
+        pygame.display.update()
+        pygame.time.delay(10)
 
 while True:
     for event in pygame.event.get():
@@ -165,28 +234,40 @@ while True:
             pygame.quit()
             exit()
 
+        if game_active == False:
+            intro_music.play(loops = -1)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                pygame.mixer.fadeout(1000)
+                fade()
+                game_active = True
+
+
     if game_active:
-            screen.blit(background_surf, (0,0))
-            # screen.blit(ground_surf, (0,700))
-            # screen.blit(ground_surf, (300,700))
-            # screen.blit(ground_surf, (600,700))
-            # screen.blit(ground_surf, (900,700))
-            # screen.blit(ground_surf, (1200,700))
-            # screen.blit(ground_surf, (1500,700))
-            # screen.blit(ground_surf, (1800,700))
+        screen.blit(background_surf, (0,0))
+        # screen.blit(ground_surf, (0,700))
+        # screen.blit(ground_surf, (300,700))
+        # screen.blit(ground_surf, (600,700))
+        # screen.blit(ground_surf, (900,700))
+        # screen.blit(ground_surf, (1200,700))
+        # screen.blit(ground_surf, (1500,700))
+        # screen.blit(ground_surf, (1800,700))
 
-            player.draw(screen)
-            player.update()
-            ice_platform.draw(screen)
-            coin.draw(screen)
-            coin.update()
+        player.draw(screen)
+        player.update()
+        ice_platform.draw(screen)
+        coin.draw(screen)
+        coin.update()
 
-            
-
-
-
-    mouse_pos = pygame.mouse.get_pos()
-    print(mouse_pos)
+    else:
+        screen.fill((176,217,247))
+        screen.blit(intro_text, intro_text_rect)
+        screen.blit(game_title, game_title_rect)
+        introplayer.draw(screen)
+        introplayer.update()
+        
+    # mouse_pos = pygame.mouse.get_pos()
+    # print(mouse_pos)
+    
 
     pygame.display.update()
     clock.tick(60)
