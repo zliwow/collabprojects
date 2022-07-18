@@ -1,4 +1,3 @@
-from platform import platform
 import pygame
 from sys import exit
 from random import randint, choice
@@ -6,7 +5,6 @@ from random import randint, choice
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
         # CHANGES
 
         # PROBLEMS
@@ -57,11 +55,15 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom = (120,800))
         self.gravity = 0
 
+        # jump sound
+        self.jump_sound = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/JumpSound.mp3')
+        self.jump_sound.set_volume(0.05)
+
     def player_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.rect.bottom >= 800:
             self.gravity = -20
-            # self.jump_sound.play()
+            self.jump_sound.play()
 
             # left and right arrow to move left and right
         if keys[pygame.K_RIGHT]:
@@ -218,6 +220,14 @@ def pause_track():
 def resume_track():
     pygame.mixer.unpause()
 
+# Taking the coin
+def takeCoin():
+    pygame.sprite.spritecollide(player.sprite, coin, True)
+    
+    # coin_taking_sound = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/TakeCoin.mp3')
+    # coin_taking_sound.play()
+
+
 # Intro fade
 def fade(): 
     fade = pygame.Surface((1406,900))
@@ -227,6 +237,12 @@ def fade():
         screen.blit(fade, (0,0))
         pygame.display.update()
         pygame.time.delay(10)
+
+# Winning/Ending
+# player_down = pygame.image.load('collabprojects/Simple Platformer/png/Sprite/Dead (17).png').convert_alpha()
+# player_down_rect = player_down.get_rect(center = (700 , 450))
+
+# finish_message = test_font.render('Santa sold his soul to capitalism', False, (0, 50, 130))
 
 while True:
     for event in pygame.event.get():
@@ -257,6 +273,7 @@ while True:
         ice_platform.draw(screen)
         coin.draw(screen)
         coin.update()
+        takeCoin()
 
     else:
         screen.fill((176,217,247))
