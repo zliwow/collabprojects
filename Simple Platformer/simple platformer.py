@@ -1,3 +1,4 @@
+from os import kill
 import pygame
 from sys import exit
 from random import randint, choice
@@ -119,7 +120,6 @@ class Goldcoin(pygame.sprite.Sprite):
         if self.coin_spin_index >= len(self.coin_spin): self.coin_spin_index = 0
         self.image = self.coin_spin[int(self.coin_spin_index)]
 
-
     def update(self):
         self.coin_animation()
 
@@ -216,7 +216,6 @@ def resume_track():
 # Taking the coin
 def takeCoin():
     pygame.sprite.spritecollide(player.sprite, coin, True)
-    
     # coin_taking_sound = pygame.mixer.Sound('collabprojects/Simple Platformer/png/music/TakeCoin.mp3')
     # coin_taking_sound.play()
 
